@@ -7,25 +7,29 @@
 #include "Common.h"
 
 #include "MapaBase.h"
+#include "MapaSolucio.h"
 #include "XML4OSMUtil.h"
 
 
 class MapaRender {
-    private:
-        MapaRender();
-        static MapaRender* m_singleton;
-        XML4OSMUtil* m_xml4osm_util;
-        MapaBase* m_mapaBase;
+private:
+    MapaRender();
+    static MapaRender* m_singleton;
+    XML4OSMUtil* m_xml4osm_util;
+    MapaBase* m_mapaBase;
 
-    public:
-        static MapaRender* instance();
-        MapaRender(MapaRender&) = delete;
-        void operator=(const MapaRender&) = delete;
-        
-        void construeixOSM(const std::string& path_map);
+public:
+    static MapaRender* instance();
+    MapaRender(MapaRender&) = delete;
+    void operator=(const MapaRender&) = delete;
 
-        std::vector<PoiBridge> renderPois();
-        std::vector<WayBridge> renderWays();
+    void construeixOSM(const std::string& path_map);
+
+    std::vector<PoiBridge> renderPois();
+    std::vector<WayBridge> renderWays();
+
+    PuntDeInteresBase* getPoiByIdx(int idx);
+    std::vector<Coordinate> shortestPath(PuntDeInteresBase* from, PuntDeInteresBase* to);
 };
 
 

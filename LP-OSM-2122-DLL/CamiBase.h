@@ -4,7 +4,8 @@
 #include <vector>
 
 class CamiBase {
-	public:
-		virtual std::vector<Coordinate> getCamiCoords() = 0;
+public:
+	virtual ~CamiBase() {};
+	virtual std::vector<Coordinate> getCamiCoords() = 0;
 };
 

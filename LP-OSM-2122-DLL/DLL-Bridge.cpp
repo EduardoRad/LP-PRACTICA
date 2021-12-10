@@ -10,7 +10,7 @@ extern "C" __declspec(dllexport) void loadOSMData(const char* pathFile) {
 
 
 // DO NOT TOUCH THIS
-extern "C" __declspec(dllexport) void renderPois(PoiBridge* (*allocator)(size_t size)) {
+extern "C" __declspec(dllexport) void renderPois(PoiBridge * (*allocator)(size_t size)) {
 	MapaRender* map = MapaRender::instance();
 	std::vector<PoiBridge> listPoiBridge = map->renderPois();
 
@@ -26,7 +26,7 @@ extern "C" __declspec(dllexport) void renderPois(PoiBridge* (*allocator)(size_t 
 }
 
 // DO NOT TOUCH THIS
-extern "C" __declspec(dllexport) bool renderWays(int offset, double* (*allocatorLats)(size_t size), double * (*allocatorLons)(size_t size))
+extern "C" __declspec(dllexport) bool renderWays(int offset, double* (*allocatorLats)(size_t size), double* (*allocatorLons)(size_t size))
 {
 	MapaRender* map = MapaRender::instance();
 	std::vector<WayBridge> listWayBridge = map->renderWays();
@@ -34,7 +34,7 @@ extern "C" __declspec(dllexport) bool renderWays(int offset, double* (*allocator
 		return false;
 	}
 
-	double* lat = allocatorLats(listWayBridge[offset].size); 
+	double* lat = allocatorLats(listWayBridge[offset].size);
 	double* lon = allocatorLons(listWayBridge[offset].size);
 	for (int i = 0; i < listWayBridge[offset].size; i++) {
 		lat[i] = listWayBridge[offset].lats[i];
@@ -45,9 +45,20 @@ extern "C" __declspec(dllexport) bool renderWays(int offset, double* (*allocator
 }
 
 // DO NOT TOUCH THIS
-extern "C" __declspec(dllexport) void shortestPath(int idxFrom, int idxTo, double* (*allocatorLats)(size_t size), double* (*allocatorLons)(size_t size)) 
+extern "C" __declspec(dllexport) void shortestPath(int idxFrom, int idxTo, double* (*allocatorLats)(size_t size), double* (*allocatorLons)(size_t size))
 {
+	MapaRender* map = MapaRender::instance();
+	PuntDeInteresBase* from = map->getPoiByIdx(idxFrom);
+	PuntDeInteresBase* to = map->getPoiByIdx(idxTo);
 
+	std::vector<Coordinate> path = map->shortestPath(from, to);
+	double* lat = allocatorLats(path.size());
+	double* lon = allocatorLons(path.size());
+
+	for (int i = 0; i < path.size(); i++) {
+		lat[i] = path[i].lat;
+		lon[i] = path[i].lon;
+	}
 }
 
 

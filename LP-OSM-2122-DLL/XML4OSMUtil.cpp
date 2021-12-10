@@ -29,7 +29,7 @@ std::vector<XmlElement> XML4OSMUtil::parseXML(const char* file) {
             if (currentNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE) {
                 std::string name = xercesc::XMLString::transcode(currentNode->getNodeName());
                 std::cout << xercesc::XMLString::transcode(currentNode->getNodeName()) << std::endl;
-                xercesc::DOMElement *currentElement = dynamic_cast<xercesc::DOMElement*>(currentNode);
+                xercesc::DOMElement* currentElement = dynamic_cast<xercesc::DOMElement*>(currentNode);
                 xercesc::DOMNamedNodeMap* attr = currentElement->getAttributes();
 
                 for (int j = 0; j < attr->getLength(); j++) {
@@ -38,7 +38,7 @@ std::vector<XmlElement> XML4OSMUtil::parseXML(const char* file) {
 
                     attributes.push_back(std::make_pair(nodeName, nodeValue));
                 }
-            
+
                 if (currentElement->hasChildNodes()) {
                     xercesc::DOMNodeList* childNodes = currentElement->getChildNodes();
 
@@ -55,7 +55,7 @@ std::vector<XmlElement> XML4OSMUtil::parseXML(const char* file) {
                                 std::string nodeValue = xercesc::XMLString::transcode(attr_child->item(k)->getNodeValue());
 
                                 childAttributes.push_back(std::make_pair(nodeName, nodeValue));
-                            }   
+                            }
                         }
 
                         children.push_back(std::make_pair(nodeChildName, childAttributes));
