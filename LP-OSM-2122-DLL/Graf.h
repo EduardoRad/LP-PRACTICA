@@ -10,7 +10,7 @@ public:
 	Graf() : m_numNodes(0), m_numArestes(0) {};
 	Graf(const std::vector<Coordinate>& nodes, const std::vector<std::vector<int>>& parNodes);
 	Graf(const std::vector<Coordinate>& nodes, const std::vector<std::vector<int>>& parNodes, const std::vector<double>& pesos);
-	~Graf();
+	~Graf() {}
 	int getNumNodes() { return m_numNodes; }
 	void afegirAresta(int posNode1, int posNode2);
 	void afegirAresta(int posNode1, int posNode2, double pes);
